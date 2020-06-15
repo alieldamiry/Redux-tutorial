@@ -1,4 +1,5 @@
 const redux = require('redux');
+const createStore = redux.createStore;
 
 // Action
 // action is javascript object that contains what needs to change in the state
@@ -11,13 +12,11 @@ function buyCake() {
     }
 }
 
-
 // ****Reducer***
 //Reducer = (prevState, action)=>newState
 const initialState = {
     numOfCakes: 10
 }
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case BUY_CAKE: return {
@@ -27,3 +26,16 @@ const reducer = (state = initialState, action) => {
         default: return state
     }
 }
+
+//*****Store****/
+const store = createStore(reducer);
+console.log('Initial State', store.getState());
+
+//*********Subscribtion*********
+const unsubscribe = store.subscribe(() => console.log('Updated State', store.getState()));
+
+//*********dispatching actions*********
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+store.dispatch(buyCake());
+unsubscribe()
