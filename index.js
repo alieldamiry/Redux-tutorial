@@ -1,5 +1,6 @@
 const redux = require('redux');
 const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
 
 // Action
 // action is javascript object that contains what needs to change in the state
@@ -68,7 +69,11 @@ const iceCreamReducer = (state = initialIceCreamState, action) => {
 // }
 
 //*****Store****/
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    cake: cakeReducer,
+    iceCream: iceCreamReducer
+});
+const store = createStore(rootReducer);
 console.log('Initial State', store.getState());
 
 //*********Subscribtion*********
