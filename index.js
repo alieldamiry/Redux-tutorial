@@ -1,12 +1,16 @@
 const redux = require('redux');
+const reduxLogger = require('redux-logger');
+
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
-
+const applyMiddleware = redux.applyMiddleware;
+const logger = reduxLogger.createLogger();
+const BUY_CAKE = 'BUY_CAKE';
+const BUY_ICECREAM = 'BUY_ICECREAM';
 // Action
 // action is javascript object that contains what needs to change in the state
 // action creator is a function that returns the action
-const BUY_CAKE = 'BUY_CAKE';
-const BUY_ICECREAM = 'BUY_ICECREAM';
+
 function buyCake() {
     return {
         type: BUY_CAKE,
@@ -73,11 +77,11 @@ const rootReducer = combineReducers({
     cake: cakeReducer,
     iceCream: iceCreamReducer
 });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 console.log('Initial State', store.getState());
 
 //*********Subscribtion*********
-const unsubscribe = store.subscribe(() => console.log('Updated State', store.getState()));
+const unsubscribe = store.subscribe(() => {});
 
 //*********dispatching actions*********
 store.dispatch(buyCake());
